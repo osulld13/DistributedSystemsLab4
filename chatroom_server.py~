@@ -60,7 +60,7 @@ def start_client_interaction(connection, client_address):
             else:
                 split_data = seperate_input_data(data)
                 #Check for Disconnect Command
-                if split_data[0] == "JOIN_CHATROOM":
+                if split_data[15] == "JOIN_CHATROOM":
                     join_chatroom(connection, client_address, curr_client_id, split_data)
     except:
         error_response(connection, 0)

@@ -80,13 +80,18 @@ class ChatroomManager:
         room = self.get_active_chatroom(chatroom_name)
         # if room exists we ad the client to it
         if room:
-            client_chatroom_join_id = self.get_next_chatroom_join_id()
-            room.add_client(client, client_chatroom_join_id)
+            if ( room.get_join_id(client.id) == -1):
+                return 1
+            else:
+                client_chatroom_join_id = self.get_next_chatroom_join_id()
+                room.add_client(client, client_chatroom_join_id)
+                return 0
         # if room doesnt exist we add a new room of the specified name
         # on our server and add the client to it
         else:
             self.add_chatroom(chatroom_name)
             self.add_client_to_chatroom(chatroom_name, client)
+            return 0
 
     def remove_client(self, client_id):
         for chatroom in self.active_chatrooms:

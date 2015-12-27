@@ -31,6 +31,15 @@ class Chatroom:
             if x[0].id == client.id:
                 self.active_clients.remove(x)
 
+    # Gets the join id for a corresponding client id
+    # return -1 -  no value found
+    # return positive integer - value found
+    def get_join_id(self, client_id_in):
+        for client_tuple in self.active_clients:
+            if (client_tuple[0].id == client_id_in):
+                return client_tuple[1]
+        return -1
+
 
 class Client:
     """Initialize a new ChatClient"""
