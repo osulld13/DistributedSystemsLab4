@@ -34,8 +34,9 @@ class Chatroom:
 
 class Client:
     """Initialize a new ChatClient"""
-    def __init__(self, id, port_number, ip_address, name):
+    def __init__(self, id, port_number, ip_address, name, socket):
         self.id = id
         self.port_number = port_number
         self.ip_address = ip_address
         self.name = name
+        self.socket = socket

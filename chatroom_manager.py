@@ -31,7 +31,7 @@ class ChatroomManager:
         self.next_chatroom_join_id = self.next_chatroom_join_id + 1
         return return_chatroom_join_id
 
-    def get_next_client_id(self):
+    def gen_client_id(self):
         return_client_id = self.next_client_id
         self.next_client_id = self.next_client_id + 1
         return return_client_id
@@ -69,10 +69,10 @@ class ChatroomManager:
     # Functions for interacting with clients
     #
 
-    def add_client(self, chatroom_name, client_ip_address, client_port_number, client_name):
-        new_client = chatroom.Client(self.get_next_client_id(), client_port_number, client_ip_address, client_name)
-        self.active_clients.append(new_client)
-        self.add_client_to_chatroom(chatroom_name, new_client)
+    def add_client(self, client_id, client_ip_address, client_port_number, client_name, client_socket):
+        if ( self.client_exists() == False ):
+            new_client = chatroom.Client(client_id, client_port_number, client_ip_address, client_name, client_socket)
+            self.active_clients.append(new_client)
 
     # Adds client to chat room
     #   Returns: Chatroom join ID for client
@@ -94,7 +94,7 @@ class ChatroomManager:
             current_client = self.get_active_client(client_id)
             if current_client:
                 self.remove_client_from_chatroom(chatroom.name, current_client)
-                
+
         for client in self.active_clients:
             # Remove client from list of current clients
             if client.id == client_id:
@@ -110,6 +110,13 @@ class ChatroomManager:
         for client in self.active_clients:
             if client.id == client_id:
                 return client
+
+    # checks if a client exists which has the same id as the one passed in
+    def client_exists(self, id_in):
+        for client in active_clients:
+            if ( client.id == id_in ):
+                return True
+        return False
 
     # Testing methods
     def log_member_data(self):
