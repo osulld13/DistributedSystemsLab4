@@ -8,7 +8,7 @@ import chatroom_manager
 # global threadpool for server
 server_thread_pool = threadpool.ThreadPool(500)
 
-port_number = 9000#int(sys.argv[1])
+port_number = 8080#int(sys.argv[1])
 
 ip_address = socket.gethostbyname(socket.gethostname())
 
@@ -17,7 +17,8 @@ current_chatroom_manager = chatroom_manager.ChatroomManager(port_number)
 def create_server_socket():
     # create socket  and initialise to localhost:8000
     sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    server_address = ('', port_number)
+    #server_address = ('', port_number)
+    server_address = ('127.0.0.1', port_number)
 
     print "starting up on %s port %s\n" % server_address
 
@@ -48,7 +49,8 @@ def start_client_interaction(connection, client_address):
             curr_client_id = current_chatroom_manager.gen_client_id()
 
             data = connection.recv(1024)
-            print "received message: %s" % data
+            if (data != None):
+                print "received message:\n%s" % data
 
             # Respond to the appropriate message
             if data == "KILL_SERVICE\n":
@@ -60,7 +62,9 @@ def start_client_interaction(connection, client_address):
                 #Check for Disconnect Command
                 if split_data[0] == "JOIN_CHATROOM":
                     join_chatroom(connection, client_address, curr_client_id, split_data)
-    finally:
+    except:
+        response = "ERROR_CODE: %s\n" % str(0)
+        response += "ERROR_DESCRPTION: %s\n" % "Program Error"
         connection.close()
 
 def kill_service(connection):
@@ -84,8 +88,13 @@ def join_chatroom(connection, client_address, client_id, split_data):
     current_chatroom_manager.add_client_to_chatroom( split_data[1], current_chatroom_manager.get_active_client( client_id ) )
     #Create and send response
     chatroom_name = split_data[1]
-    room_ref = get_active_chatroom(chatroom_name).id
-    response = "JOINED_CHATROOM: %s\nSERVER_IP: %s\nPORT: %s\nROOM_REF:%s\nJOIN_ID:%s\n" % chatroom_name, ip_address, port_number, room_ref, client_id
+    room_ref = current_chatroom_manager.get_active_chatroom(chatroom_name).id
+    response = "JOINED_CHATROOM: %s\n" % str(chatroom_name)
+    response += "SERVER_IP: %s\n" % str(ip_address)
+    response += "PORT: %s\n" % str(port_number)
+    response += "ROOM_REF: %s\n" % str(room_ref)
+    response += "JOIN_ID: %s\n" % str(client_id)
+    connection.sendall("%s" % response)
 
 #Function to split reveived data strings into its component elements
 def seperate_input_data(input_data):

@@ -70,7 +70,7 @@ class ChatroomManager:
     #
 
     def add_client(self, client_id, client_ip_address, client_port_number, client_name, client_socket):
-        if ( self.client_exists() == False ):
+        if ( self.client_exists(client_id) == False ):
             new_client = chatroom.Client(client_id, client_port_number, client_ip_address, client_name, client_socket)
             self.active_clients.append(new_client)
 
@@ -113,7 +113,7 @@ class ChatroomManager:
 
     # checks if a client exists which has the same id as the one passed in
     def client_exists(self, id_in):
-        for client in active_clients:
+        for client in self.active_clients:
             if ( client.id == id_in ):
                 return True
         return False
