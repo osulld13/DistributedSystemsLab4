@@ -8,7 +8,7 @@ import chatroom_manager
 # global threadpool for server
 server_thread_pool = threadpool.ThreadPool(500)
 
-port_number = 8080#int(sys.argv[1])
+port_number = 43#int(sys.argv[1])
 
 #ip_address = '46.101.47.238'
 ip_address = socket.gethostbyname(socket.gethostname())
