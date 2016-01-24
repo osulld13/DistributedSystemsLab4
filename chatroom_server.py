@@ -63,6 +63,8 @@ def start_client_interaction(connection, client_address):
                 #Check for Disconnect Command
                 if split_data[0] == "JOIN_CHATROOM":
                     join_chatroom(connection, client_address, curr_client_id, split_data)
+                elif split_data[0] == "LEAVE_CHATROOM":
+                    leave_chatroom(connection, curr_client_id, split_data)
     except:
         error_response(connection, 0)
         connection.close()
@@ -101,8 +103,26 @@ def join_chatroom(connection, client_address, client_id, split_data):
         response += "SERVER_IP: %s\n" % str(ip_address)
         response += "PORT: %s\n" % str(port_number)
         response += "ROOM_REF: %s\n" % str(room_ref)
-        response += "JOIN_ID: %s\n" % str(client_id)
+        response += "JOIN_ID: %s\n" % str(join_id)
         connection.sendall("%s" % response)
+
+def leave_chatroom(connection, client_id, split_data):
+    # Remove client from chatroom
+    join_id = current_chatroom_manager.get_active_chatroom(split_data[1]).get_join_id(client_id)
+    err_val = current_chatroom_manager.remove_client_from_chatroom(split_data[1], current_chatroom_manager.get_active_client( client_id ))
+
+    # if chatroom doesn't exist throw error
+    if ( err_val == 2 ):
+        error_response(connection, err_val)
+
+    # Successfully added
+    else:
+        #Create and send response
+        chatroom_name = split_data[1]
+        response = "LEFT_CHATROOM: %s\n" % str(chatroom_name)
+        response += "JOIN_ID: %s\n" % str(join_id)
+        connection.sendall("%s" % response)
+
 
 # Function for providing error responses for various error cases
 def error_response(connection, err_val):
@@ -112,6 +132,8 @@ def error_response(connection, err_val):
         response += "ERROR_DESCRPTION: %s\n" % "Server error"
     elif ( err_val == 1 ):
         response += "ERROR_DESCRPTION: %s\n" % "You are already in that chat room"
+    elif ( err_val == 2 ):
+        response += "ERROR_DESCRPTION: %s\n" % "That room doesn't exist"
 
     connection.sendall("%s" % response)
 

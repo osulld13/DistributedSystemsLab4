@@ -26,7 +26,7 @@ def connect_to_server_userin():
 
     sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     #server_address = ('46.101.47.238', port_num)
-    server_address = ('127.0.0.1', 8080)
+    server_address = ('127.0.0.1', 43)
     print "connecting to %s on port %s\n" % server_address
     sock.connect(server_address)
 
@@ -56,6 +56,10 @@ def generate_message(input):
         response += "CLIENT_IP: %s\n" % str(ip_address)
         response += "PORT: %s\n" % str(0)
         response += "CLIENT_NAME: %s\n" % str(split_input[2])
+    if (split_input[0] == "leave"):
+        response = "LEAVE_CHATROOM: %s\n" % str(split_input[1])
+        response += "JOIN_ID: %s\n" % str(split_input[2])
+        response += "CLIENT_NAME: %s\n" % str(split_input[3])
     return response
 
 if __name__ == '__main__':
