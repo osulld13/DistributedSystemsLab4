@@ -6,9 +6,16 @@ Dependency Info:
 
 Running and Testing:
  - To run the program run
-      ./start.sh [port_num]
- - Testing of the program can be done with the multithreaded client program TCPClient.py, this can be run with
-      ./test.sh
+      python chatroom_server.py
+ - Testing of the program can be done with the multi-threaded client program chatroom_client.py, this can be run with
+      python chatroom_client.py
+
+      test client commands - these are used to generate the actual commands that are transported over TCP:
+        - join room_name client_name
+        - leave room_name client_name
+        - disconnect client_name
+        - chat room_name join_id client_name message
+
 
 Other info:
   - The threadpool module was downloaded from http://code.activestate.com/recipes/577187-python-thread-pool/
