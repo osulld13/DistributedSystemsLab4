@@ -98,20 +98,20 @@ def join_chatroom(connection, client_address, client_id, split_data):
         room_ref = current_chatroom_manager.get_active_chatroom(chatroom_name).id
         join_id = current_chatroom_manager.get_active_chatroom(chatroom_name).get_join_id(client_id)
         response = "JOINED_CHATROOM:%s\n" % str(chatroom_name)
-        response += "SERVER_IP:[%s]\n" % str(ip_address)
-        response += "PORT:[%s]\n" % str(port_number)
-        response += "ROOM_REF:[%s]\n" % str(room_ref)
-        response += "JOIN_ID:[%s]\n" % str(client_id)
+        response += "SERVER_IP:%s\n" % str(ip_address)
+        response += "PORT:%s\n" % str(port_number)
+        response += "ROOM_REF:%s\n" % str(room_ref)
+        response += "JOIN_ID:%s\n" % str(client_id)
         connection.sendall("%s" % response)
 
 # Function for providing error responses for various error cases
 def error_response(connection, err_val):
-    response = "ERROR_CODE:[%s]\n" % str(err_val)
+    response = "ERROR_CODE:%s\n" % str(err_val)
 
     if( err_val == 0 ):
-        response += "ERROR_DESCRPTION:[%s]\n" % "Server error"
+        response += "ERROR_DESCRPTION:%s\n" % "Server error"
     elif ( err_val == 1 ):
-        response += "ERROR_DESCRPTION:[%s]\n" % "You are already in that chat room"
+        response += "ERROR_DESCRPTION:%s\n" % "You are already in that chat room"
 
     connection.sendall("%s" % response)
 
