@@ -10,6 +10,7 @@ server_thread_pool = threadpool.ThreadPool(500)
 
 port_number = 8080#int(sys.argv[1])
 
+#ip_address = 46.101.47.238
 ip_address = socket.gethostbyname(socket.gethostname())
 
 current_chatroom_manager = chatroom_manager.ChatroomManager(port_number)
@@ -96,7 +97,7 @@ def join_chatroom(connection, client_address, client_id, split_data):
         chatroom_name = split_data[1]
         room_ref = current_chatroom_manager.get_active_chatroom(chatroom_name).id
         join_id = current_chatroom_manager.get_active_chatroom(chatroom_name).get_join_id(client_id)
-        response = "JOINED_CHATROOM: %s\n" % str(chatroom_name)
+        response = "JOINED_CHATROOM:[%s]\n" % str(chatroom_name)
         response += "SERVER_IP: %s\n" % str(ip_address)
         response += "PORT: %s\n" % str(port_number)
         response += "ROOM_REF: %s\n" % str(room_ref)
