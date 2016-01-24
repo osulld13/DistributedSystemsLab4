@@ -60,6 +60,15 @@ def generate_message(input):
         response = "LEAVE_CHATROOM: %s\n" % str(split_input[1])
         response += "JOIN_ID: %s\n" % str(split_input[2])
         response += "CLIENT_NAME: %s\n" % str(split_input[3])
+    if (split_input[0] == "disconnect"):
+        response = "DISCONNECT: %s\n" % str(ip_address)
+        response += "PORT: %s\n" % str(0)
+        response += "CLIENT_NAME: %s\n" % str(split_input[1])
+    if (split_input[0] == "chat"):
+        response = "CHAT: %s\n" % str(split_input[1])
+        response += "JOIN_ID: %s\n" % str(split_input[2])
+        response += "CLIENT_NAME: %s\n" % str(split_input[3])
+        response += "MESSAGE: %s\n" % str(split_input[4])
     return response
 
 if __name__ == '__main__':

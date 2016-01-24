@@ -65,6 +65,10 @@ def start_client_interaction(connection, client_address):
                     join_chatroom(connection, client_address, curr_client_id, split_data)
                 elif split_data[0] == "LEAVE_CHATROOM":
                     leave_chatroom(connection, curr_client_id, split_data)
+                elif split_data[0] == "DISCONNECT":
+                    disconnect(connection, curr_client_id, split_data)
+                elif split_data[0] == "CHAT":
+                    send_message(connection, curr_client_id, split_data)
     except:
         error_response(connection, 0)
         connection.close()
@@ -73,6 +77,7 @@ def kill_service(connection):
     # Kill service
     response = "Killing Service\n"
     connection.sendall("%s" % response)
+    connection.close()
     os._exit(0)
 
 def helo_response(connection, data):
@@ -123,6 +128,27 @@ def leave_chatroom(connection, client_id, split_data):
         response += "JOIN_ID: %s\n" % str(join_id)
         connection.sendall("%s" % response)
 
+# Disconnects a user from the chatroom
+def disconnect(connection, client_id, split_data):
+    current_chatroom_manager.remove_client(client_id)
+    print "\nClient %s Disconnected\n" % str(client_id)
+    connection.close()
+
+# Sends a message to a chat which a client is a member of
+def send_message(connection, curr_client_id, split_data):
+    # Get room sing room_ref
+    current_room = current_chatroom_manager.get_active_chatroom(split_data[1]);
+    #Generate message string
+    #message = generate_message(split_data[1], current_chatroom_manager.get_active_client(curr_client_id).name, split_data[7] )
+    message = "CHAT: %s\n" % str(split_data[1])
+    message += "CLIENT_NAME: %s\n" % str( current_chatroom_manager.get_active_client(curr_client_id).name )
+    message += "MESSAGE: %s\n" % str(split_data[7])
+
+    # Get socket for each client and send the message
+    for client in current_room.active_clients:
+        client[0].socket.sendall("%s" % message)
+        #connection = client[0].socket
+        #connection.sendall("%s", message)
 
 # Function for providing error responses for various error cases
 def error_response(connection, err_val):
@@ -157,11 +183,3 @@ if __name__ == '__main__':
     create_server_socket()
     # wait for threads to complete
     server_thread_pool.wait_completion()
-
-# Plan For Chat Server
-#
-# Have one socket per client
-# Have two threads per client
-#   - One listening for messages
-#   - One for sending messages
-# Have an
