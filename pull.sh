@@ -1,4 +1,4 @@
 #!/bin/bash
 git checkout .
-gitclean -f
+git clean -f
 git pull origin master
