@@ -11,10 +11,11 @@ Running and Testing:
       python chatroom_client.py
 
       test client commands - these are used to generate the actual commands that are transported over TCP:
-        - join room_name client_name
-        - leave room_name client_name
-        - disconnect client_name
-        - chat room_name join_id client_name message
+
+        join room_name client_name
+        leave room_name client_name
+        disconnect client_name
+        chat room_name join_id client_name message
 
 
 Other info:
