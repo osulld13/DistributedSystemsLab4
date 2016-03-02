@@ -4,6 +4,7 @@ import threadpool
 import os
 import re
 import chatroom_manager
+import pdb
 
 # global threadpool for server
 server_thread_pool = threadpool.ThreadPool(500)
@@ -111,6 +112,7 @@ def join_chatroom(connection, client_address, client_id, split_data):
         response += "PORT:%s\n" % str(port_number)
         response += "ROOM_REF:%s\n" % str(room_ref)
         response += "JOIN_ID:%s\n" % str(join_id)
+        pdb.set_trace()
         connection.sendall(response)
         print_sent_message(response)
         #client_join_room_message(connection, client_id)
