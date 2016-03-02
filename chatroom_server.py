@@ -10,8 +10,8 @@ server_thread_pool = threadpool.ThreadPool(500)
 
 port_number = 43#int(sys.argv[1])
 
-#ip_address = '46.101.47.238'
-ip_address = socket.gethostbyname(socket.gethostname())
+ip_address = '46.101.47.238'
+#ip_address = socket.gethostbyname(socket.gethostname())
 
 current_chatroom_manager = chatroom_manager.ChatroomManager(port_number)
 
