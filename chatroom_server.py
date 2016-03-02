@@ -112,7 +112,6 @@ def join_chatroom(connection, client_address, client_id, split_data):
         response += "PORT:%s\n" % str(port_number)
         response += "ROOM_REF:%s\n" % str(room_ref)
         response += "JOIN_ID:%s\n" % str(join_id)
-        pdb.set_trace()
         connection.sendall(response)
         print_sent_message(response)
         #client_join_room_message(connection, client_id)
@@ -152,6 +151,7 @@ def send_message(connection, curr_client_id, split_data):
     message += "CLIENT_NAME: %s\n" % str( current_chatroom_manager.get_active_client(curr_client_id).name )
     message += "MESSAGE: %s\n" % str(split_data[7])
 
+    pdb.set_trace()
     # Get socket for each client and send the message
     for client in current_room.active_clients:
         client[0].socket.sendall("%s" % message)
