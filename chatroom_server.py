@@ -156,6 +156,21 @@ def send_message(connection, curr_client_id, split_data):
 
     print_sent_message(message)
 
+def client_join_room_message(connection, curr_client_id):
+    # Get room sing room_ref
+    current_room = current_chatroom_manager.get_active_chatroom(split_data[1]);
+    #Generate message string
+    #message = generate_message(split_data[1], current_chatroom_manager.get_active_client(curr_client_id).name, split_data[7] )
+    message = str( current_chatroom_manager.get_active_client(curr_client_id).name ) + " has joined the chat\n"
+
+    # Get socket for each client and send the message
+    for client in current_room.active_clients:
+        client[0].socket.sendall("%s" % message)
+        #connection = client[0].socket
+        #connection.sendall("%s", message)
+
+    print_sent_message(message)
+
 # Function for providing error responses for various error cases
 def error_response(connection, err_val):
     response = "ERROR_CODE: %s\n" % str(err_val)
