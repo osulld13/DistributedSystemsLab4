@@ -18,8 +18,8 @@ current_chatroom_manager = chatroom_manager.ChatroomManager(port_number)
 def create_server_socket():
     # create socket  and initialise to localhost:8000
     sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    #server_address = ('', port_number)
-    server_address = ('127.0.0.1', port_number)
+    server_address = ('', port_number)
+    #server_address = ('127.0.0.1', port_number)
 
     print "starting up on %s port %s\n" % server_address
 
