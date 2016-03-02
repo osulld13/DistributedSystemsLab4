@@ -85,9 +85,9 @@ def helo_response(connection, data):
     # Respond to HELO message
     # Construct the appropriate response
     response = data
-    response += "IP:[" + ip_address + "]\n"
-    response += "Port:[" + str(port_number) +"]\n"
-    response += "StudentID:[a09577ec2fe97c36c854f4010526ed2f81b4747edea7d4247ded8c32f76e93f2]\n"
+    response += "IP:" + ip_address + "\n"
+    response += "Port:" + str(port_number) +"\n"
+    response += "StudentID:a09577ec2fe97c36c854f4010526ed2f81b4747edea7d4247ded8c32f76e93f2\n"
     connection.sendall("%s" % response)
     print_sent_message(response)
 
