@@ -113,7 +113,8 @@ def join_chatroom(connection, client_address, client_id, split_data):
         response += "JOIN_ID:%s\n" % str(join_id)
         connection.sendall(response)
         print_sent_message(response)
-        client_join_room_message(connection, client_id)
+        #client_join_room_message(connection, client_id)
+        send_message(connection, client_id, ["", str(room_ref)], "", "", "", "", "", split_data[7])
 
 def leave_chatroom(connection, client_id, split_data):
     # Remove client from chatroom
@@ -177,11 +178,11 @@ def error_response(connection, err_val):
     response = "ERROR_CODE: %s\n" % str(err_val)
 
     if( err_val == 0 ):
-        response += "ERROR_DESCRPTION: %s\n" % "Server error"
+        response += "ERROR_DESCRIPTION: %s\n" % "Server error"
     elif ( err_val == 1 ):
-        response += "ERROR_DESCRPTION: %s\n" % "You are already in that chat room"
+        response += "ERROR_DESCRIPTION: %s\n" % "You are already in that chat room"
     elif ( err_val == 2 ):
-        response += "ERROR_DESCRPTION: %s\n" % "That room doesn't exist"
+        response += "ERROR_DESCRIPTION: %s\n" % "That room doesn't exist"
 
     connection.sendall("%s" % response)
     print_sent_message(response)
