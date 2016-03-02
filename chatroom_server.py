@@ -113,6 +113,7 @@ def join_chatroom(connection, client_address, client_id, split_data):
         response += "JOIN_ID:%s\n" % str(join_id)
         connection.sendall(response)
         print_sent_message(response)
+        client_join_room_message(connection, client_id)
 
 def leave_chatroom(connection, client_id, split_data):
     # Remove client from chatroom
