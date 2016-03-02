@@ -1,4 +1,4 @@
-import sys
+#import sys
 import socket
 import threadpool
 import os
@@ -77,6 +77,7 @@ def kill_service(connection):
     # Kill service
     response = "Killing Service\n"
     connection.sendall("%s" % response)
+    print_sent_message(response)
     connection.close()
     os._exit(0)
 
@@ -88,6 +89,7 @@ def helo_response(connection, data):
     response += "Port:[" + str(port_number) +"]\n"
     response += "StudentID:[a09577ec2fe97c36c854f4010526ed2f81b4747edea7d4247ded8c32f76e93f2]\n"
     connection.sendall("%s" % response)
+    print_sent_message(response)
 
 def join_chatroom(connection, client_address, client_id, split_data):
     #Create client and add to chatroom
@@ -110,6 +112,7 @@ def join_chatroom(connection, client_address, client_id, split_data):
         response += "ROOM_REF: %s\n" % str(room_ref)
         response += "JOIN_ID: %s\n" % str(join_id)
         connection.sendall("%s" % response)
+        print_sent_message(response)
 
 def leave_chatroom(connection, client_id, split_data):
     # Remove client from chatroom
@@ -127,6 +130,7 @@ def leave_chatroom(connection, client_id, split_data):
         response = "LEFT_CHATROOM: %s\n" % str(chatroom_name)
         response += "JOIN_ID: %s\n" % str(join_id)
         connection.sendall("%s" % response)
+        print_sent_message(response)
 
 # Disconnects a user from the chatroom
 def disconnect(connection, client_id, split_data):
@@ -150,6 +154,8 @@ def send_message(connection, curr_client_id, split_data):
         #connection = client[0].socket
         #connection.sendall("%s", message)
 
+    print_sent_message(message)
+
 # Function for providing error responses for various error cases
 def error_response(connection, err_val):
     response = "ERROR_CODE: %s\n" % str(err_val)
@@ -162,6 +168,7 @@ def error_response(connection, err_val):
         response += "ERROR_DESCRPTION: %s\n" % "That room doesn't exist"
 
     connection.sendall("%s" % response)
+    print_sent_message(response)
 
 #Function to split reveived data strings into its component elements
 def seperate_input_data(input_data):
@@ -178,6 +185,9 @@ def seperate_input_data(input_data):
                 seperated_data.append(k)
 
     return seperated_data
+
+def print_sent_message(message):
+    print "Sent Message:\n%s\n" % message
 
 if __name__ == '__main__':
     create_server_socket()
