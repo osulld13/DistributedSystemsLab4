@@ -144,7 +144,7 @@ def disconnect(connection, client_id, split_data):
 # Sends a message to a chat which a client is a member of
 def send_message(connection, curr_client_id, split_data):
     # Get room sing room_ref
-    current_room = current_chatroom_manager.get_active_chatroom(split_data[1]);
+    current_room = current_chatroom_manager.get_active_chatroom(split_data[1])
     #Generate message string
     #message = generate_message(split_data[1], current_chatroom_manager.get_active_client(curr_client_id).name, split_data[7] )
     message = "CHAT: %s\n" % str(split_data[1])
@@ -162,7 +162,7 @@ def send_message(connection, curr_client_id, split_data):
 
 def client_join_room_message(connection, curr_client_id):
     # Get room sing room_ref
-    current_room = current_chatroom_manager.get_active_chatroom(split_data[1]);
+    current_room = current_chatroom_manager.get_active_chatroom(split_data[1])
     #Generate message string
     #message = generate_message(split_data[1], current_chatroom_manager.get_active_client(curr_client_id).name, split_data[7] )
     message = "CHAT:" + str( current_chatroom_manager.get_active_client(curr_client_id).name ) + " has joined the chat\n"
