@@ -50,6 +50,7 @@ def start_client_interaction(connection, client_address):
 
         while True:
 
+            pdb.set_trace()
             data = connection.recv(1024)
             if (data != None):
                 print "received message:\n%s" % data
@@ -193,7 +194,6 @@ def print_sent_message(message):
     print "Sent Message:\n%s\n" % message
 
 if __name__ == '__main__':
-    pdb.set_trace()
     create_server_socket()
     # wait for threads to complete
     server_thread_pool.wait_completion()
