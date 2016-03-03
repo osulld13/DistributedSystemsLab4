@@ -114,8 +114,9 @@ def join_chatroom(connection, client_address, client_id, split_data):
         response += "JOIN_ID:%s\n" % str(join_id)
         connection.sendall(response)
         print_sent_message(response)
+        current_chatroom_manager.log_member_data()
         #client_join_room_message(connection, client_id)
-        send_message(connection, client_id, ["", str(room_ref), "", "", "", "", "", split_data[7]])
+        send_message(connection, client_id, ["", 0, "", "", "", "", "", split_data[7]])
 
 def leave_chatroom(connection, client_id, split_data):
     # Remove client from chatroom
@@ -150,6 +151,8 @@ def send_message(connection, curr_client_id, split_data):
     message = "CHAT: %s\n" % str(split_data[1])
     message += "CLIENT_NAME: %s\n" % str( current_chatroom_manager.get_active_client(curr_client_id).name )
     message += "MESSAGE: %s\n" % str(split_data[7])
+
+    current_chatroom_manager.log_member_data()
 
     pdb.set_trace()
     # Get socket for each client and send the message
