@@ -47,11 +47,10 @@ def start_client_interaction(connection, client_address):
         #It is to be used to check that one thread does not spawn multiple
         #clients.
         curr_client_id = current_chatroom_manager.gen_client_id()
-        connection.settimeout(2)
 
         while True:
 
-            data = connection.recv(1024)
+            data = connection.recv(2048)
             if (data != None):
                 print "received message:\n%s" % data
 
