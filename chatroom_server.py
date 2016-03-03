@@ -90,7 +90,6 @@ def helo_response(connection, data):
     response += "Port:" + str(port_number) +"\n"
     response += "StudentID:a09577ec2fe97c36c854f4010526ed2f81b4747edea7d4247ded8c32f76e93f2\n"
     connection.sendall("%s" % response)
-    connection.flush()
     print_sent_message(response)
 
 def join_chatroom(connection, client_address, client_id, split_data):
@@ -114,7 +113,6 @@ def join_chatroom(connection, client_address, client_id, split_data):
         response += "ROOM_REF:%s\n" % str(room_ref)
         response += "JOIN_ID:%s\n" % str(join_id)
         connection.sendall(response)
-        connection.flush()
         print_sent_message(response)
         #client_join_room_message(connection, client_id)
         send_message(connection, client_id, ["", chatroom_name, "", "", "", "", "", split_data[7] + " has joined this chatroom."])
@@ -136,7 +134,6 @@ def leave_chatroom(connection, client_id, split_data):
         response = "LEFT_CHATROOM:%s\n" % str(chatroom_name)
         response += "JOIN_ID:%s\n" % str(join_id)
         connection.sendall("%s" % response)
-        connection.flush()
         print_sent_message(response)
         send_message(connection, client_id, ["", chatroom_name, "", "", "", "", "", client.name + " has left this chatroom."])
 
@@ -159,7 +156,6 @@ def send_message(connection, curr_client_id, split_data):
     # Get socket for each client and send the message
     for client in current_room.active_clients:
         client[0].socket.sendall("%s" % message)
-        client[0].socket.flush()
         #connection = client[0].socket
         #connection.sendall("%s", message)
 
@@ -177,7 +173,6 @@ def error_response(connection, err_val):
         response += "ERROR_DESCRIPTION: %s\n" % "That room doesn't exist"
 
     connection.sendall("%s" % response)
-    connection.flush()
     print_sent_message(response)
 
 #Function to split reveived data strings into its component elements
