@@ -131,8 +131,8 @@ def leave_chatroom(connection, client_id, split_data):
     else:
         #Create and send response
         chatroom_name = split_data[1]
-        response = "LEFT_CHATROOM: %s\n" % str(chatroom_name)
-        response += "JOIN_ID: %s\n" % str(join_id)
+        response = "LEFT_CHATROOM:%s\n" % str(chatroom_name)
+        response += "JOIN_ID:%s\n" % str(join_id)
         connection.sendall("%s" % response)
         print_sent_message(response)
 
@@ -154,7 +154,6 @@ def send_message(connection, curr_client_id, split_data):
 
     current_chatroom_manager.log_member_data()
 
-    pdb.set_trace()
     # Get socket for each client and send the message
     for client in current_room.active_clients:
         client[0].socket.sendall("%s" % message)
