@@ -50,7 +50,6 @@ def start_client_interaction(connection, client_address):
 
         while True:
 
-            pdb.set_trace()
             data = connection.recv(1024)
             if (data != None):
                 print "received message:\n%s" % data
@@ -66,6 +65,7 @@ def start_client_interaction(connection, client_address):
                 if split_data[0] == "JOIN_CHATROOM":
                     join_chatroom(connection, client_address, curr_client_id, split_data)
                 elif split_data[0] == "LEAVE_CHATROOM":
+                    pdb.set_trace()
                     leave_chatroom(connection, curr_client_id, split_data)
                 elif split_data[0] == "DISCONNECT":
                     disconnect(connection, curr_client_id, split_data)
