@@ -112,6 +112,7 @@ class ChatroomManager:
         else:
             return 2
 
+
     def get_active_client(self, client_id):
         for client in self.active_clients:
             if client.id == client_id:
