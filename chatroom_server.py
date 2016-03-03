@@ -116,7 +116,7 @@ def join_chatroom(connection, client_address, client_id, split_data):
         print_sent_message(response)
         current_chatroom_manager.log_member_data()
         #client_join_room_message(connection, client_id)
-        send_message(connection, client_id, ["", chatroom_name, "", "", "", "", "", split_data[7]])
+        send_message(connection, client_id, ["", chatroom_name, "", "", "", "", "", split_data[7] + " has joined this chatroom."])
 
 def leave_chatroom(connection, client_id, split_data):
     # Remove client from chatroom
