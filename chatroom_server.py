@@ -50,7 +50,7 @@ def start_client_interaction(connection, client_address):
 
         while True:
 
-            data = connection.recv()
+            data = connection.recv(4096)
             if (data != None):
                 print "received message:\n%s" % data
 
