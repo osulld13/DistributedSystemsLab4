@@ -148,7 +148,7 @@ def send_message(connection, curr_client_id, split_data):
     current_room = current_chatroom_manager.get_active_chatroom(split_data[1])
     #Generate message string
     #message = generate_message(split_data[1], current_chatroom_manager.get_active_client(curr_client_id).name, split_data[7] )
-    message = "CHAT: %s\n" % str(split_data[1])
+    message = "CHAT: %s\n" % str(current_room.id)
     message += "CLIENT_NAME: %s\n" % str( current_chatroom_manager.get_active_client(curr_client_id).name )
     message += "MESSAGE: %s\n" % str(split_data[7])
 
