@@ -47,7 +47,7 @@ def start_client_interaction(connection, client_address):
         #It is to be used to check that one thread does not spawn multiple
         #clients.
         curr_client_id = current_chatroom_manager.gen_client_id()
-        connection.set_timeout(2)
+        connection.settimeout(2)
 
         while True:
 
