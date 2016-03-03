@@ -121,7 +121,8 @@ def join_chatroom(connection, client_address, client_id, split_data):
 def leave_chatroom(connection, client_id, split_data):
     # Remove client from chatroom
     join_id = current_chatroom_manager.get_active_chatroom(split_data[1]).get_join_id(client_id)
-    err_val = current_chatroom_manager.remove_client_from_chatroom(split_data[1], current_chatroom_manager.get_active_client( client_id ))
+    client = current_chatroom_manager.get_active_client( client_id )
+    err_val = current_chatroom_manager.remove_client_from_chatroom(split_data[1], client )
 
     # if chatroom doesn't exist throw error
     if ( err_val == 2 ):
@@ -135,6 +136,7 @@ def leave_chatroom(connection, client_id, split_data):
         response += "JOIN_ID:%s\n" % str(join_id)
         connection.sendall("%s" % response)
         print_sent_message(response)
+        send_message(connection, client_id, ["", chatroom_name, "", "", "", "", "", client.name + " has left this chatroom."])
 
 # Disconnects a user from the chatroom
 def disconnect(connection, client_id, split_data):
