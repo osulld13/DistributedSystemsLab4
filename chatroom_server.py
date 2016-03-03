@@ -50,6 +50,7 @@ def start_client_interaction(connection, client_address):
 
         while True:
 
+            pdb.set_trace()
             data = connection.recv(1024)
             if (data != None):
                 print "received message:\n%s" % data
@@ -157,7 +158,6 @@ def send_message(connection, curr_client_id, split_data):
         #connection = client[0].socket
         #connection.sendall("%s", message)
 
-    pdb.set_trace()
     print_sent_message(message)
 
 # Function for providing error responses for various error cases
