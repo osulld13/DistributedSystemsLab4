@@ -65,7 +65,6 @@ def start_client_interaction(connection, client_address):
                 if split_data[0] == "JOIN_CHATROOM":
                     join_chatroom(connection, client_address, curr_client_id, split_data)
                 elif split_data[0] == "LEAVE_CHATROOM":
-                    pdb.set_trace()
                     leave_chatroom(connection, curr_client_id, split_data)
                 elif split_data[0] == "DISCONNECT":
                     disconnect(connection, curr_client_id, split_data)
@@ -158,6 +157,7 @@ def send_message(connection, curr_client_id, split_data):
         #connection = client[0].socket
         #connection.sendall("%s", message)
 
+    pdb.set_trace()
     print_sent_message(message)
 
 # Function for providing error responses for various error cases
